@@ -1,0 +1,64 @@
+---
+import { ButtonPlay } from '../buttons/ButtonPlay';
+
+interface Song {
+  id: string;
+  name: string;
+  path: string;
+}
+
+interface Props {
+  album: {
+    name: string;
+    id: string;
+    release: string;
+    imgUrl: string;
+    artist: string;
+    color: string;
+    songs: Song[];
+  }
+}
+
+const {album} = Astro.props;
+
+const {imgUrl, name, artist, songs, id, release} = album;
+---
+
+<div
+  class={`relative card w-[230px] h-[300px] p-5
+ bg-neutral-900 rounded-lg hover:bg-neutral-800`}
+>
+  <a href=`/album/${id}` class="z-0 flex flex-col justify-center items-center gap-5">
+    <picture>
+      <img class="w-full h-full rounded-lg" src={imgUrl} alt="portada album" transition:name={`album-image-${id}`} />
+    </picture>
+    <div class="flex flex-col items-start w-full">
+      <h2 class="text-lg text-white font-circular-bold" transition:name={`albun-name-${id}`}>{name}</h2>
+      <h3 class="text-base text-neutral-400 font-circular-light" transition:name={`artist-name-${id}`}>{artist}</h3>
+    </div>
+  </a>
+  <ButtonPlay songs={songs} albumId={id} client:only="react"/>
+</div>
+
+
+<style>
+  button {
+    opacity: 0;
+    bottom: 0px;
+    visibility: hidden;
+    transition:
+      opacity 0.4s ease,
+      bottom 0.4s ease,
+      visibility 0s linear 0.4s;
+  }
+
+  :hover button {
+    opacity: 1;
+    bottom: 8px;
+    visibility: visible;
+    transition:
+      opacity 0.4s ease,
+      bottom 0.4s ease,
+      visibility 0s linear;
+  }
+</style>

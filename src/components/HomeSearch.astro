@@ -1,0 +1,14 @@
+---
+import HomeSelected from "../components/searchHome/HomeSelected.astro";
+import HomeNoSelected from "../components/searchHome/HomeNoSelected.astro";
+import SearchSelected from "../components/searchHome/SearchSelected.astro";
+import SearchNoSelected from "../components/searchHome/SearchNoSelected.astro";
+const { pathname } = Astro.url;
+---
+
+<section class="bg-[#121212] rounded-md px-7 py-5">
+  <ul class="w-full h-full flex flex-col justify-center items-start gap-y-5">
+    {pathname === "/" ? <HomeSelected /> : <HomeNoSelected />}
+    {pathname === "/search" ? <SearchSelected /> : <SearchNoSelected />}
+  </ul>
+</section>

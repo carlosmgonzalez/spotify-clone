@@ -1,0 +1,26 @@
+---
+import CardAlbum from "../components/cards/CardAlbum.astro";
+import { albumsDB } from "../database/albumsDB";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Spotify - Web Player: Music for everyone">
+	<div class="flex flex-col p-4">
+		<h1 class="text-2xl font-circular-bold text-white mb-4">
+			Popular albums
+		</h1>
+		<div class="flex flex-auto gap-4">
+			{
+				albumsDB.map((album) => {
+					return (
+						<CardAlbum
+							album={album}
+						/>
+					);
+				})
+			}
+		</div>
+	</div>
+</Layout>
+
+<style></style>
