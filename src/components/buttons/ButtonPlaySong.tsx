@@ -1,12 +1,7 @@
-import { useGlobalStore, usePlayStore } from '../../store/globalStore';
+import { usePlayStore } from '../../store/globalStore';
+import type {Song} from "../../interfaces/album"
 
-interface Song {
-  id: string;
-  name: string;
-  path: string;
-};
-
-export const ButtonPlaySong = ({song, albumId}: {song: Song, albumId: string}) => {
+export const ButtonPlaySong = ({song, albumId}: {song: Song, albumId: number}) => {
 
   const {isPlay, songPath, songTime, songId, albumId: albumIdGlobal} = usePlayStore(state => state.currentPlay);
   const setSongPath = usePlayStore(state => state.setSongPath);

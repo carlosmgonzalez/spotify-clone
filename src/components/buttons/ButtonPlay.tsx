@@ -1,15 +1,9 @@
-import { useEffect } from 'react';
-import { useGlobalStore, usePlayStore } from '../../store/globalStore';
+import { usePlayStore } from '../../store/globalStore';
+import type {Song} from '../../interfaces/album';
 
-interface Song {
-  id: string;
-  name: string;
-  path: string;
-};
+export const ButtonPlay = ({songs, albumId}: {songs: Song[], albumId: number}) => {
 
-export const ButtonPlay = ({songs, albumId}: {songs: Song[], albumId: string}) => {
-
-  const {isPlay, songPath, songTime, songId, albumId: albumIdGlobal} = usePlayStore(state => state.currentPlay);
+  const {isPlay, songId, albumId: albumIdGlobal} = usePlayStore(state => state.currentPlay);
   const setSongPath = usePlayStore(state => state.setSongPath);
   const setIsPlay = usePlayStore(state => state.setIsPlay);
   const setAlbumId = usePlayStore(state => state.setAlbumId);
@@ -23,29 +17,26 @@ export const ButtonPlay = ({songs, albumId}: {songs: Song[], albumId: string}) =
         setSongPath(songs[0].path);
         setSongId(songs[0].id);
         setSongTime(0);
-        return;
+      } else {
+        setIsPlay(false);
       }
-      setIsPlay(false);
     } else {
       if (songId && albumId === albumIdGlobal) {
-        const song = songs.find(song => song.id === songId);
-        setAlbumId(albumId);
-        setSongPath(song!.path)
         setIsPlay(true);
-        return;
+      } else {
+        setAlbumId(albumId);
+        setSongPath(songs[0].path)
+        setSongId(songs[0].id);
+        setSongTime(0);
+        setIsPlay(true);
       }
-      setAlbumId(albumId);
-      setSongPath(songs[0].path)
-      setSongId(songs[0].id);
-      setSongTime(0);
-      setIsPlay(true);
     }
   };
 
   return (
     <button
       onClick={handlePlay}
-      className={`buttonCard absolute right-[30px] bottom-5 z-20 w-[55px] h-[55px]
+      className={`buttonCard absolute right-[30px] z-20 w-[55px] h-[55px]
         flex justify-center items-center bg-green-500 rounded-full shadow-lg`}
     >
       {

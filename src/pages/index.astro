@@ -1,7 +1,17 @@
 ---
-import CardAlbum from "../components/cards/CardAlbum.astro";
-import { albumsDB } from "../database/albumsDB";
-import Layout from "../layouts/Layout.astro";
+	import CardAlbum from "../components/cards/CardAlbum.astro";
+	import Layout from "../layouts/Layout.astro";
+	import type {Album} from "../interfaces/album"
+
+	const res = await fetch(
+	"http://localhost:4321/api/album", {
+		method: "GET",
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+
+	const albums: Album[] = await res.json();
 ---
 
 <Layout title="Spotify - Web Player: Music for everyone">
@@ -9,18 +19,12 @@ import Layout from "../layouts/Layout.astro";
 		<h1 class="text-2xl font-circular-bold text-white mb-4">
 			Popular albums
 		</h1>
-		<div class="flex flex-auto gap-4">
-			{
-				albumsDB.map((album) => {
-					return (
-						<CardAlbum
-							album={album}
-						/>
-					);
-				})
+		<div class="flex flex-auto gap-4 flex-wrap">
+		 	{
+				albums.map(album => (
+					<CardAlbum album={album}/>
+				))
 			}
 		</div>
 	</div>
 </Layout>
-
-<style></style>

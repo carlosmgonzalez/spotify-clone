@@ -31,13 +31,12 @@ const { title } = Astro.props;
 			<slot />
 		</main>
 		<footer class="col-span-2">
-			<Player client:load transition:name="media-player" transition:persist/>
+			<Player client:only="react" transition:name="media-player" transition:persist/>
 		</footer>
 	</body>
 </html>
 
 <style is:global>
-
 	@font-face {
 		font-family: "circular-bold";
 		src: url("/fonts/CircularStd-Bold.otf");
@@ -68,25 +67,25 @@ const { title } = Astro.props;
 	@media (width <= 1000px) {
 		body {
 			grid-template-columns: 30% 70%;
-			grid-template-rows: 92% 8%;
+			grid-template-rows: 90% 10%;
 		}
 	}
 
 	@media (width >= 1000px) {
 		body {
 			grid-template-columns: 25% 75%;
-			grid-template-rows: 92% 8%;
+			grid-template-rows: 90% 10%;
 		}
 	}
 
 	nav {
 		display: grid;
-		grid-template-rows: 13% 87%;
+		grid-template-rows: 18% 82%;
 	}
 
 	.buttonCard {
 		opacity: 0;
-		bottom: 95px;
+		bottom: 110px;
 		visibility: hidden;
 		transition:
 			opacity 0.4s ease,
@@ -96,7 +95,7 @@ const { title } = Astro.props;
 
 	.card:hover .buttonCard {
 		opacity: 1;
-		bottom: 100px;
+		bottom: 120px;
 		visibility: visible;
 		transition:
 			opacity 0.4s ease,

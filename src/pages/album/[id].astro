@@ -1,44 +1,41 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import {albumsDB} from "../../database/albumsDB"
-import CardSong from "../../components/cards/CardSong.astro";
-import {ButtonPlayList} from "../../components/buttons/ButtonPlayList";
-import { ButtonPlay } from "../../components/buttons/ButtonPlay";
-const {id} = Astro.params;
-const redirect = Astro.redirect
+  import Layout from "../../layouts/Layout.astro";
+  import CardSong from "../../components/cards/CardSong.astro";
+  import {ButtonPlayList} from "../../components/buttons/ButtonPlayList";
+  import type { Album } from "../../interfaces/album";
+  import NavBar from "../../components/ui/NavBar.astro";
 
-const album = albumsDB.find(album => album.id === id);
+  const {id} = Astro.params;
+
+  const res = await fetch(
+  `http://localhost:4321/api/album/${id}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  const album: Album = await res.json();
 ---
 
 <Layout title="Spotify">
-  <div class={`h-full bg-gradient-to-b from-[rgb(118,57,50)] to-[rgb(18,18,18)] pt-5`}>
-    <nav class="w-full h-[40px] flex px-4">
-      <a href="/" class="flex justify-center items-center bg-neutral-800/80 rounded-full w-10 h-10">
-        <svg 
-          fill="currentColor"
-          role="img" aria-hidden="true" 
-          class="w-[15px] h-[15px] font-circular-light text-white" 
-          viewBox="0 0 16 16"
-        >
-          <path d="M11.03.47a.75.75 0 0 1 0 1.06L4.56 8l6.47 6.47a.75.75 0 1 1-1.06 1.06L2.44 8 9.97.47a.75.75 0 0 1 1.06 0z"></path>
-        </svg>
-      </a>
-    </nav>
+  <NavBar/>
+  <div class={`bg-gradient-to-b from-[rgb(118,57,50)] to-[rgb(18,18,18)] flex flex-col pt-11`}>
     <div class="flex gap-4 p-4">
       <picture>
-        <img src={album?.imgUrl} transition:name={`album-image-${id}`} class="w-[200px] lg:w-[260px]"/>
+        <img src={album.cover} transition:name={`album-image-${id}`} class="w-[200px] lg:w-[300px]"/>
       </picture>
       <div class="flex flex-col gap-2 lg:gap-4 self-end">
         <span class="font-circular-light text-sm">Album</span>
-        <h2 class="text-white text-4xl lg:text-7xl font-circular-bold" transition:name={`albun-name-${id}`}>{album?.name}</h2>
-        <h3 class="font-circular-medium" transition:name={`artist-name-${id}`}>{album?.artist}</h3>
+        <h2 class="text-white text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-circular-bold" transition:name={`albun-name-${id}`}>{album.name}</h2>
+        <h3 class="font-circular-medium" transition:name={`artist-name-${id}`}>{album.artist.name}</h3>
       </div>
     </div>
     
-    <div class="bg-neutral-900/40 h-full w-full flex flex-col">
+    <div class="bg-neutral-900/40 w-full flex flex-col pb-5">
       <div class="w-[95%] py-5 self-center">
         <div class="flex gap-5 items-center">
-          <ButtonPlayList songs={album!.songs} albumId={id!} client:only="react"/>
+          <ButtonPlayList songs={album!.song} albumId={parseInt(id!)} client:only="react"/>
           <svg 
             fill="currentColor"
             role="img" aria-hidden="true" 
@@ -75,9 +72,9 @@ const album = albumsDB.find(album => album.id === id);
       <div class="border-b border-b-neutral-600 self-center w-[95%] mb-5 mt-2"></div>
       <ul class="flex flex-col items-center gap-3">
         {
-          album?.songs.map((song, index) => {
+          album?.song.map((song, index) => {
             return (
-              <CardSong name={song.name} index={index + 1} artist={album.artist} song={song} albumId={id!}/>
+              <CardSong name={song.name} index={index + 1} artist={album.artist.name} song={song} albumId={parseInt(id!)}/>
             )
           })
         }

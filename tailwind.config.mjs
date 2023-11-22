@@ -7,7 +7,7 @@ export default {
 				"circular-bold": ["circular-bold"],
 				"circular-light": ["circular-light"],
 				"circular-medium": ["circular-medium"],
-			}
+			},
 		},
 	},
 	plugins: [

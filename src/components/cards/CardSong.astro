@@ -1,17 +1,12 @@
 ---
   import {ButtonPlaySong} from "../buttons/ButtonPlaySong";
-
-  interface Song {
-  id: string;
-  name: string;
-  path: string;
-};
+  import type {Song} from '../../interfaces/album'
 
   interface Props {
     name: string;
     artist: string;
     index: number;
-    albumId: string;
+    albumId: number;
     song: Song;
   };
 

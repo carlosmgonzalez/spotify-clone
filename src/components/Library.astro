@@ -1,9 +1,19 @@
 ---
+import type { Artist } from "../interfaces/album";
+import CardArtist from "./cards/CardArtist.astro";
+const res = await fetch(
+  `http://localhost:4321/api/artist`, 
+  {
+    method: "GET",
+    headers: { 'Content-Type': 'application/json'}
+  }
+);
 
+const artists: Artist[] = await res.json();
 ---
 
-<section class="bg-[#121212] rounded-md px-7 py-6 mt-3">
-  <div class="flex justify-between items-center">
+<section class="bg-[#121212] rounded-md pt-5 mt-3">
+  <div class="flex justify-between items-center w-full px-5">
     <div class="flex gap-6">
       <svg
         fill="currentColor"
@@ -31,5 +41,12 @@
         ></path></svg
       >
     </div>
+  </div>
+  <div class="flex flex-col gap-2 mt-5 px-3">
+    {
+      artists.map(artist => (
+        <CardArtist artist={artist}/>
+      ))
+    }
   </div>
 </section>
