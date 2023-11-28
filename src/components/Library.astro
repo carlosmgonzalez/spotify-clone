@@ -1,13 +1,10 @@
 ---
 import type { Artist } from "../interfaces/album";
 import CardArtist from "./cards/CardArtist.astro";
-const res = await fetch(
-  `http://localhost:4321/api/artist`, 
-  {
-    method: "GET",
-    headers: { 'Content-Type': 'application/json'}
-  }
-);
+const res = await fetch(`/api/artist`, {
+  method: "GET",
+  headers: { "Content-Type": "application/json" },
+});
 
 const artists: Artist[] = await res.json();
 ---
@@ -43,10 +40,6 @@ const artists: Artist[] = await res.json();
     </div>
   </div>
   <div class="flex flex-col gap-2 mt-5 px-3">
-    {
-      artists.map(artist => (
-        <CardArtist artist={artist}/>
-      ))
-    }
+    {artists.map((artist) => <CardArtist artist={artist} />)}
   </div>
 </section>

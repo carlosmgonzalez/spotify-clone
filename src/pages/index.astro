@@ -1,30 +1,23 @@
 ---
-	import CardAlbum from "../components/cards/CardAlbum.astro";
-	import Layout from "../layouts/Layout.astro";
-	import type {Album} from "../interfaces/album"
+import CardAlbum from "../components/cards/CardAlbum.astro";
+import Layout from "../layouts/Layout.astro";
+import type { Album } from "../interfaces/album";
 
-	const res = await fetch(
-	"http://localhost:4321/api/album", {
-		method: "GET",
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+const res = await fetch("/api/album", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-	const albums: Album[] = await res.json();
+const albums: Album[] = await res.json();
 ---
 
 <Layout title="Spotify - Web Player: Music for everyone">
-	<div class="flex flex-col p-4">
-		<h1 class="text-2xl font-circular-bold text-white mb-4">
-			Popular albums
-		</h1>
-		<div class="flex flex-auto gap-4 flex-wrap">
-		 	{
-				albums.map(album => (
-					<CardAlbum album={album}/>
-				))
-			}
-		</div>
-	</div>
+  <div class="flex flex-col p-4">
+    <h1 class="text-2xl font-circular-bold text-white mb-4">Popular albums</h1>
+    <div class="flex flex-auto gap-4 flex-wrap">
+      {albums.map((album) => <CardAlbum album={album} />)}
+    </div>
+  </div>
 </Layout>
