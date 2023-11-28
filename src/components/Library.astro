@@ -1,7 +1,10 @@
 ---
 import type { Artist } from "../interfaces/album";
 import CardArtist from "./cards/CardArtist.astro";
-const res = await fetch(`/api/artist`, {
+
+const url = Astro.url.origin;
+
+const res = await fetch(`${url}/api/artist`, {
   method: "GET",
   headers: { "Content-Type": "application/json" },
 });

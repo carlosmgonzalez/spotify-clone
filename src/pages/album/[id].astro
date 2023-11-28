@@ -6,15 +6,18 @@ import type { Album } from "../../interfaces/album";
 import NavBar from "../../components/ui/NavBar.astro";
 
 const { id } = Astro.params;
+const url = Astro.url.origin;
 
-const res = await fetch(`/api/album/${id}`, {
+const res = await fetch(`${url}/api/album/${id}`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-const album: Album = await res.json();
+const data = await res.json();
+
+const album: Album = data;
 ---
 
 <Layout title="Spotify">

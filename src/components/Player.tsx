@@ -6,7 +6,7 @@ import { cn } from "../lib/utils";
 import styles from "./player.module.css";
 import { time } from "../lib/time";
 
-export const Player = () => {
+export const Player = ({ url }: { url: string }) => {
   const refAudio = useRef<HTMLAudioElement>(null);
   let audioRef = refAudio.current;
 
@@ -50,7 +50,7 @@ export const Player = () => {
   }, [isPlay]);
 
   useEffect(() => {
-    fetch(`/api/song/${songId}`, {
+    fetch(`${url}/api/song/${songId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

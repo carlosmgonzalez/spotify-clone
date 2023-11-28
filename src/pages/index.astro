@@ -3,12 +3,16 @@ import CardAlbum from "../components/cards/CardAlbum.astro";
 import Layout from "../layouts/Layout.astro";
 import type { Album } from "../interfaces/album";
 
-const res = await fetch("/api/album", {
+const url = Astro.url.origin;
+
+const res = await fetch(`${url}/api/album`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+console.log(res);
 
 const albums: Album[] = await res.json();
 ---
