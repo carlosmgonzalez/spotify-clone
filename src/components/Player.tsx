@@ -50,7 +50,7 @@ export const Player = ({ url }: { url: string }) => {
   }, [isPlay]);
 
   useEffect(() => {
-    fetch(`${url}/api/song/${songId}`, {
+    fetch(`${import.meta.env.URL_PAGE}/api/song/${songId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
